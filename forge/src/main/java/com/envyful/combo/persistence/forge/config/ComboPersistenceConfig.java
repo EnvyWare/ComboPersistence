@@ -2,7 +2,7 @@ package com.envyful.combo.persistence.forge.config;
 
 import com.envyful.api.config.data.ConfigPath;
 import com.envyful.api.config.yaml.AbstractYamlConfig;
-import info.pixelmon.repack.ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 @ConfigPath("config/ComboPersistence/config.yml")
 @ConfigSerializable
