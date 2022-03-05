@@ -4,6 +4,8 @@ import com.envyful.api.config.yaml.YamlConfigFactory;
 import com.envyful.api.forge.concurrency.ForgeTaskBuilder;
 import com.envyful.combo.persistence.forge.config.ComboPersistenceConfig;
 import com.envyful.combo.persistence.forge.data.CustomCaptureCombo;
+import com.envyful.combo.persistence.forge.listener.PlayerLoginListener;
+import com.envyful.combo.persistence.forge.listener.PlayerQuitListener;
 import com.envyful.combo.persistence.forge.task.TimeOutTask;
 import com.google.common.collect.Maps;
 import com.pixelmonmod.pixelmon.Pixelmon;
@@ -40,6 +42,9 @@ public class ComboPersistenceForge {
     public void onInit(FMLInitializationEvent event) {
         instance = this;
         this.reloadConfig();
+
+        new PlayerLoginListener();
+        new PlayerQuitListener();
 
         new ForgeTaskBuilder()
                 .async(true)
