@@ -1,8 +1,10 @@
 package com.envyful.combo.persistence.forge;
 
 import com.envyful.api.config.yaml.YamlConfigFactory;
+import com.envyful.api.forge.concurrency.ForgeTaskBuilder;
 import com.envyful.combo.persistence.forge.config.ComboPersistenceConfig;
 import com.envyful.combo.persistence.forge.data.CustomCaptureCombo;
+import com.envyful.combo.persistence.forge.task.TimeOutTask;
 import com.google.common.collect.Maps;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
@@ -38,6 +40,13 @@ public class ComboPersistenceForge {
     public void onInit(FMLInitializationEvent event) {
         instance = this;
         this.reloadConfig();
+
+        new ForgeTaskBuilder()
+                .async(true)
+                .task(new TimeOutTask())
+                .delay(10L)
+                .interval(20L)
+                .start();
     }
 
     public void reloadConfig() {
@@ -65,6 +74,10 @@ public class ComboPersistenceForge {
 
     public static PlayerCombo getCombo(EntityPlayerMP player) {
         return getInstance().storedCombo.get(player.getUniqueID());
+    }
+
+    public static void clearTimeOut() {
+        getInstance().storedCombo.entrySet().removeIf(entry -> entry.getValue().hasTimedOut());
     }
 
     public static class PlayerCombo {
